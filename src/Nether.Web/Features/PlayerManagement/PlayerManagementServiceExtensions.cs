@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Nether.Data.EntityFramework.PlayerManagement;
 using Nether.Data.InMemory.PlayerManagement;
+using Nether.Data.MySql.PlayerManagement;
 
 namespace Nether.Web.Features.PlayerManagement
 {
@@ -31,6 +32,7 @@ namespace Nether.Web.Features.PlayerManagement
                 {"in-memory", typeof(InMemoryPlayerManagementStoreDependencyConfiguration) },
                 {"sql", typeof(SqlPlayerManagementStoreDependencyConfiguration) },
                 {"mongo", typeof(SqlPlayerManagementStoreDependencyConfiguration) },
+                {"mysql", typeof(MySqlPlayerManagementStoreDependencyConfiguration) },
             };
 
         public static IServiceCollection AddPlayerManagementServices(
@@ -53,31 +55,6 @@ namespace Nether.Web.Features.PlayerManagement
             services.AddServiceFromConfiguration("PlayerManagement:Store", s_wellKnownStoreTypes, configuration, logger, hostingEnvironment);
 
             return services;
-        }
-        // TODO - look at abstracting this behind a "UsePlayerManagement" method or similar
-        public static void InitializePlayerManagementStore(this IApplicationBuilder app, IConfiguration configuration, ILogger logger)
-        {
-            var serviceSwitchSettings = app.ApplicationServices.GetRequiredService<NetherServiceSwitchSettings>();
-            if (!serviceSwitchSettings.IsServiceEnabled("PlayerManagement"))
-            {
-                return;
-            }
-
-            var wellKnownType = configuration["PlayerManagement:Store:wellknown"];
-            switch(wellKnownType)
-            {
-                case "sql":
-                    {
-                        logger.LogInformation("Run Migrations for SqlPlayerManagementContext");
-                        using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-                        {
-                            var context = (SqlPlayerManagementContext)serviceScope.ServiceProvider.GetRequiredService<PlayerManagementContextBase>();
-                            context.Database.Migrate();
-                        }
-                    }
-                    break;
-
-            }
         }
     }
 }
