@@ -21,6 +21,7 @@ using Nether.Web.Utilities;
 using Microsoft.AspNetCore.Hosting;
 using Nether.Data.EntityFramework.Leaderboard;
 using Nether.Data.InMemory.Leaderboard;
+using Nether.Data.MySql.Leaderboard;
 
 namespace Nether.Web.Features.Leaderboard
 {
@@ -30,6 +31,7 @@ namespace Nether.Web.Features.Leaderboard
             {
                 {"in-memory", typeof(InMemoryLeaderboardStoreDependencyConfiguration) },
                 {"sql", typeof(SqlLeaderboardStoreDependencyConfiguration) },
+                {"mysql", typeof(MySqlLeaderboardStoreDependencyConfiguration) },
             };
 
         private static Dictionary<string, Type> s_wellKnownAnalyticsIntegrationTypes = new Dictionary<string, Type>
