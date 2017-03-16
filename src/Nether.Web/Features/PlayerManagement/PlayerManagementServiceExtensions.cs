@@ -19,6 +19,8 @@ using Nether.Web.Features.PlayerManagement.Configuration;
 using Nether.Web.Utilities;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
+using Nether.Data.EntityFramework.PlayerManagement;
+using Nether.Data.InMemory.PlayerManagement;
 
 namespace Nether.Web.Features.PlayerManagement
 {
@@ -62,14 +64,19 @@ namespace Nether.Web.Features.PlayerManagement
             }
 
             var wellKnownType = configuration["PlayerManagement:Store:wellknown"];
-            if (wellKnownType == "sql")
+            switch(wellKnownType)
             {
-                logger.LogInformation("Run Migrations for SqlPlayerManagementContext");
-                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-                {
-                    var context = (SqlPlayerManagementContext)serviceScope.ServiceProvider.GetRequiredService<PlayerManagementContextBase>();
-                    context.Database.Migrate();
-                }
+                case "sql":
+                    {
+                        logger.LogInformation("Run Migrations for SqlPlayerManagementContext");
+                        using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+                        {
+                            var context = (SqlPlayerManagementContext)serviceScope.ServiceProvider.GetRequiredService<PlayerManagementContextBase>();
+                            context.Database.Migrate();
+                        }
+                    }
+                    break;
+
             }
         }
     }

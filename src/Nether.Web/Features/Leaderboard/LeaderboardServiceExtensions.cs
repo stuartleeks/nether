@@ -19,6 +19,8 @@ using Nether.Integration.Default.Analytics;
 using Nether.Web.Features.Leaderboard.Configuration;
 using Nether.Web.Utilities;
 using Microsoft.AspNetCore.Hosting;
+using Nether.Data.EntityFramework.Leaderboard;
+using Nether.Data.InMemory.Leaderboard;
 
 namespace Nether.Web.Features.Leaderboard
 {

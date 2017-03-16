@@ -18,6 +18,8 @@ using Nether.Web.Features.Analytics.Configuration;
 using Nether.Web.Features.Analytics.Models.Endpoint;
 using Nether.Web.Utilities;
 using Microsoft.AspNetCore.Hosting;
+using Nether.Data.EntityFramework.Analytics;
+using Nether.Data.InMemory.Analytics;
 
 namespace Nether.Web.Features.Analytics
 {

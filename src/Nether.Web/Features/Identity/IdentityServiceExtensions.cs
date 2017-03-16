@@ -13,6 +13,12 @@ using IdentityServer4.Services;
 using IdentityServer4.Validation;
 
 using Nether.Common.DependencyInjection;
+using Nether.Data.Identity;
+using Nether.Data.EntityFramework.Identity;
+using Nether.Data.InMemory.Identity;
+using Nether.Data.MySql.Identity;
+using Nether.Data.Sql.Identity;
+using Nether.Integration.Identity;
 using Nether.Web.Features.Identity.Configuration;
 using Nether.Web.Utilities;
 
