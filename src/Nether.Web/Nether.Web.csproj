@@ -13,13 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Leaderboard\NewFolder\**" />
-    <Content Remove="Features\Leaderboard\NewFolder\**" />
-    <EmbeddedResource Remove="Features\Leaderboard\NewFolder\**" />
-    <None Remove="Features\Leaderboard\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\**\*;Views;Areas\**\Views;appsettings.json;web.config;Nether.Web.Xml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
