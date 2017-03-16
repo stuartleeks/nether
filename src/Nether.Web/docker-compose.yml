@@ -1,0 +1,9 @@
+version: '2'
+services:
+  netherweb:
+    image: netherweb
+    environment: 
+      - ASPNETCORE_ENVIRONMENT
+      - Identity:IdentityServer:RequireHttps
+    ports: 
+     - 5000:5000
