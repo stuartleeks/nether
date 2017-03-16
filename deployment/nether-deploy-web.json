@@ -223,85 +223,85 @@
                     "alwaysOn": "[variables('HostingSKUs')[parameters('WebHostingPlan')].enableAlwaysOn]",
                     "WEB_HOST_URL": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
                     "ASPNETCORE_ENVIRONMENT": "Development",
-                    "Common:Cors:AllowedOrigins": "",
-                    "Common:RedirectToHttps": "true",
+                    "Common__Cors__AllowedOrigins": "",
+                    "Common__RedirectToHttps": "true",
 
                     /* Leaderboard feature config overrides */
-                    "Leaderboard:Store:wellknown": "sql",
-                    "Leaderboard:Store:properties:ConnectionString": "[variables('sqlConnString')]",
-                    "Leaderboard:AnalyticsIntegrationClient:wellknown": "eventhub",
-                    "Leaderboard:AnalyticsIntegrationClient:properties:EventHubConnectionString": "[parameters('eventhubSendPolicy').connectionString]",
+                    "Leaderboard__Store__wellknown": "sql",
+                    "Leaderboard__Store__properties__ConnectionString": "[variables('sqlConnString')]",
+                    "Leaderboard__AnalyticsIntegrationClient__wellknown": "eventhub",
+                    "Leaderboard__AnalyticsIntegrationClient__properties__EventHubConnectionString": "[parameters('eventhubSendPolicy').connectionString]",
 
                     /* AdminWebUi feature config overrides */
-                    "AdminWebUi:AuthServerUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/identity/')]",
-                    "AdminWebUi:ApiBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api/')]",
-                    "AdminWebUi:RedirectUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/admin/')]",
+                    "AdminWebUi__AuthServerUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/identity/')]",
+                    "AdminWebUi__ApiBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api/')]",
+                    "AdminWebUi__RedirectUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/admin/')]",
 
                     /* PlayerManagement feature config overrides */
-                    "PlayerManagement:Store:wellknown": "sql",
-                    "PlayerManagement:Store:properties:ConnectionString": "[variables('sqlConnString')]",
+                    "PlayerManagement__Store__wellknown": "sql",
+                    "PlayerManagement__Store__properties__ConnectionString": "[variables('sqlConnString')]",
 
                     /* Analytics feature config overrides */
-                    "Analytics:EventHub:Ttl": "24:00:00",
-                    "Analytics:EventHub:Resource": "[parameters('eventhubSendPolicy').uri]",
-                    "Analytics:EventHub:KeyName": "[parameters('eventhubSendPolicy').policyName]",
-                    "Analytics:EventHub:AccessKey": "[parameters('eventhubSendPolicy').policyKey]",
-                    "Analytics:Store:wellknown": "sql",
-                    "Analytics:Store:properties:ConnectionString": "[variables('sqlConnString')]",
+                    "Analytics__EventHub__Ttl": "24:00:00",
+                    "Analytics__EventHub__Resource": "[parameters('eventhubSendPolicy').uri]",
+                    "Analytics__EventHub__KeyName": "[parameters('eventhubSendPolicy').policyName]",
+                    "Analytics__EventHub__AccessKey": "[parameters('eventhubSendPolicy').policyKey]",
+                    "Analytics__Store__wellknown": "sql",
+                    "Analytics__Store__properties__ConnectionString": "[variables('sqlConnString')]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:InitialSetup:AdminPassword": "[parameters('initialNetherAdministratorPassword')]",
+                    "Identity__InitialSetup__AdminPassword": "[parameters('initialNetherAdministratorPassword')]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Store:wellknown": "sql",
-                    "Identity:Store:properties:ConnectionString": "[variables('sqlConnString')]",
+                    "Identity__Store__wellknown": "sql",
+                    "Identity__Store__properties__ConnectionString": "[variables('sqlConnString')]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:clientcredstest:Name": "Test Client for client credentials flow",
-                    "Identity:Clients:clientcredstest:AllowedGrantTypes": "client_credentials",
-                    "Identity:Clients:clientcredstest:ClientSecrets": "devsecret",
-                    "Identity:Clients:clientcredstest:AllowedScopes": "openid, profile, nether-all",
+                    "Identity__Clients__clientcredstest__Name": "Test Client for client credentials flow",
+                    "Identity__Clients__clientcredstest__AllowedGrantTypes": "client_credentials",
+                    "Identity__Clients__clientcredstest__ClientSecrets": "devsecret",
+                    "Identity__Clients__clientcredstest__AllowedScopes": "openid, profile, nether-all",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:resourceownertest:AllowedGrantTypes": "password",
-                    "Identity:Clients:resourceownertest:ClientSecrets": "devsecret",
-                    "Identity:Clients:resourceownertest:AllowedScopes": "nether-all",
+                    "Identity__Clients__r_esourceownertest__AllowedGrantTypes": "password",
+                    "Identity__Clients__r_esourceownertest__ClientSecrets": "devsecret",
+                    "Identity__Clients__r_esourceownertest__AllowedScopes": "nether-all",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:customgranttest:AllowedGrantTypes": "fb-usertoken",
-                    "Identity:Clients:customgranttest:ClientSecrets": "devsecret",
-                    "Identity:Clients:customgranttest:AllowedScopes": "nether-all",
+                    "Identity__Clients__customgranttest__AllowedGrantTypes": "fb-usertoken",
+                    "Identity__Clients__customgranttest__ClientSecrets": "devsecret",
+                    "Identity__Clients__customgranttest__AllowedScopes": "nether-all",
 
                     /* TODO: Add explanation of section */
-                    "Identity:PlayerManagementClient:wellknown": "default",
-                    "Identity:PlayerManagementClient:properties:IdentityBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/identity')]",
-                    "Identity:PlayerManagementClient:properties:ApiBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api')]",
+                    "Identity__PlayerManagementClient__wellknown": "default",
+                    "Identity__PlayerManagementClient__properties:IdentityBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/identity')]",
+                    "Identity__PlayerManagementClient__properties:ApiBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api')]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:IdentityServer:RequireHttps": "true",
-                    "Identity:IdentityServer:Authority": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/identity')]",
-                    "Identity:IdentityServer:UiBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui')]",
+                    "Identity__IdentityServer__RequireHttps": "true",
+                    "Identity__IdentityServer__Authority": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/identity')]",
+                    "Identity__IdentityServer__UiBaseUrl": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui')]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:swaggerui:RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api/swagger/ui/o2c.html')]",
-                    "Identity:Clients:swaggerui:AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api/swagger/ui/o2c.html')]",
+                    "Identity__Clients__swaggerui__RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api/swagger/ui/o2c.html')]",
+                    "Identity__Clients__swaggerui__AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/api/swagger/ui/o2c.html')]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:devclient:RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/signin-oidc')]",
-                    "Identity:Clients:devclient:AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/signin-oidc')]",
-                    "Identity:Clients:devclient:PostLogoutRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
+                    "Identity__Clients__devclient__RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/signin-oidc')]",
+                    "Identity__Clients__devclient__AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/signin-oidc')]",
+                    "Identity__Clients__devclient__PostLogoutRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:angular2client:RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
-                    "Identity:Clients:angular2client:AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
-                    "Identity:Clients:angular2client:PostLogoutRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/login')]",
-                    "Identity:Clients:angular2client:AllowedCorsOrigins": "[concat('http://', reference(variables('webSiteName')).hostNames[0],',https://', reference(variables('webSiteName')).hostNames[0])]",
+                    "Identity__Clients__angular2client__RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
+                    "Identity__Clients__angular2client__AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0])]",
+                    "Identity__Clients__angular2client__PostLogoutRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/login')]",
+                    "Identity__Clients__angular2client__AllowedCorsOrigins": "[concat('http://', reference(variables('webSiteName')).hostNames[0],',https://', reference(variables('webSiteName')).hostNames[0])]",
 
                     /* TODO: Add explanation of section */
-                    "Identity:Clients:jstest:RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/features/identity-test/callback.html')]",
-                    "Identity:Clients:jstest:AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/features/identity-test/callback.html')]",
-                    "Identity:Clients:jstest:PostLogoutRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/features/identity-test/index.html')]",
-                    "Identity:Clients:jstest:AllowedCorsOrigins": "[concat('http://', reference(variables('webSiteName')).hostNames[0],',https://', reference(variables('webSiteName')).hostNames[0])]"
+                    "Identity__Clients__jstest__RedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/features/identity-test/callback.html')]",
+                    "Identity__Clients__jstest__AllowedRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/features/identity-test/callback.html')]",
+                    "Identity__Clients__jstest__PostLogoutRedirectUris": "[concat('https://', reference(variables('webSiteName')).hostNames[0], '/ui/features/identity-test/index.html')]",
+                    "Identity__Clients__jstest__AllowedCorsOrigins": "[concat('http://', reference(variables('webSiteName')).hostNames[0],',https://', reference(variables('webSiteName')).hostNames[0])]"
                   }
                 }
             ]
