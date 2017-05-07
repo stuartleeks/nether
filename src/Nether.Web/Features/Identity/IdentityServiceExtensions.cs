@@ -74,7 +74,7 @@ namespace Nether.Web.Features.Identity
                     options.Endpoints.EnableTokenEndpoint = true;
                     options.UserInteraction.ErrorUrl = "/account/error";
                 })
-                .AddTemporarySigningCredential() // using inbuilt signing cert, but we are explicitly a dev-only service at this point ;-)
+                .AddDeveloperSigningCredential(filename: "runtime-artifacts/identity-cert") // using temporary signing cert, but we are explicitly a dev-only service at this point ;-)
                 .AddInMemoryClients(clients)
                 .AddInMemoryIdentityResources(Scopes.GetIdentityResources())
                 .AddInMemoryApiResources(Scopes.GetApiResources())
