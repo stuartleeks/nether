@@ -67,6 +67,8 @@ Write-Host "******************"
 Write-Host "*** Running integration tests: in-memory"
 $status = RunIntegrationTests
 
+# kill the web server (brute force - killing all dotnet processes!)
+Stop-Process -Name dotnet
 Rename-Item "$netherRoot\nether.web.log" "$netherRoot\nether.web-inmemory.log"
 Push-AppveyorArtifact "$netherRoot\nether.web-inmemory.log" -FileName nether.web-inmemory.txt
 
@@ -74,17 +76,16 @@ if ($status -ne 0){
     exit $status
 }
 
-# kill the web server (brute force - killing all dotnet processes!)
-Stop-Process -Name dotnet
 
 ConfigureSqlServer
 Write-Host "******************"
 Write-Host "*** Running integration tests: SQL Server"
 $status = RunIntegrationTests
 
+# kill the web server (brute force - killing all dotnet processes!)
+Stop-Process -Name dotnet
 Rename-Item "$netherRoot\nether.web.log" "$netherRoot\nether.web-sql.log"
 Push-AppveyorArtifact "$netherRoot\nether.web-sql.log" -FileName nether.web-sql.txt
-
 
 if ($status -ne 0){
     exit $status
