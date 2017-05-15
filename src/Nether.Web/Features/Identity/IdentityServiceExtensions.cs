@@ -15,6 +15,7 @@ using IdentityServer4.Validation;
 using Nether.Common.DependencyInjection;
 using Nether.Web.Features.Identity.Configuration;
 using Nether.Web.Utilities;
+using System.IO;
 
 namespace Nether.Web.Features.Identity
 {
@@ -64,6 +65,10 @@ namespace Nether.Web.Features.Identity
                 throw new NotSupportedException($"The Identity Server configuration is currently only intended for Development environments. Current environment: '{hostingEnvironment.EnvironmentName}'");
             }
 
+            if (!Directory.Exists("runtime-artifacts"))
+            {
+                Directory.CreateDirectory("runtime-artifacts");
+            }
             var clientSource = new ConfigurationBasedClientSource(logger);
             var clients = clientSource.LoadClients(configuration.GetSection("Identity:Clients"))
                                 .ToList();
