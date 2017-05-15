@@ -52,6 +52,21 @@ function ConfigureSqlServer() {
     ${env:Analytics:Store:properties:ConnectionString} = "Server=(local)\SQL2016;Database=nether;User ID=sa;Password=Password12!"
 }
 
+function RenameWithRetry($filename, $newfilename) {
+    $count = 0
+    while ($count -lt 10) {
+        try {
+            Rename-Item $filename $newfilename
+            return
+        } 
+        catch {
+            Write-Host "Rename failed... retrying"
+         }
+        Start-Sleep -Seconds 1
+    }
+    Write-Host "Rename faild!"
+    exit -100
+}
 Write-Host "***************************************************************************"
 Write-Host " _       _                       _   _               _            _"
 Write-Host "(_)_ __ | |_ ___  __ _ _ __ __ _| |_(_) ___  _ __   | |_ ___  ___| |_ ___"
@@ -69,10 +84,10 @@ $status = RunIntegrationTests
 
 # kill the web server (brute force - killing all dotnet processes!)
 Stop-Process -Name dotnet
-Rename-Item "$netherRoot\nether.web.log" "$netherRoot\nether.web-inmemory.log"
+RenameWithRetry "$netherRoot\nether.web.log" "$netherRoot\nether.web-inmemory.log"
 Push-AppveyorArtifact "$netherRoot\nether.web-inmemory.log" -FileName nether.web-inmemory.txt
 
-if ($status -ne 0){
+if ($status -ne 0) {
     exit $status
 }
 
@@ -84,9 +99,9 @@ $status = RunIntegrationTests
 
 # kill the web server (brute force - killing all dotnet processes!)
 Stop-Process -Name dotnet
-Rename-Item "$netherRoot\nether.web.log" "$netherRoot\nether.web-sql.log"
+RenameWithRetry "$netherRoot\nether.web.log" "$netherRoot\nether.web-sql.log"
 Push-AppveyorArtifact "$netherRoot\nether.web-sql.log" -FileName nether.web-sql.txt
 
-if ($status -ne 0){
+if ($status -ne 0) {
     exit $status
 }
