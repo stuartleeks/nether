@@ -1,5 +1,7 @@
 $netherRoot = $PSScriptRoot
 
+$ErrorActionPreference = "Stop"
+
 function RunIntegrationTests() {
     # launch Nether.Web
     Start-Process powershell "$netherRoot\rundev.ps1 > '$netherRoot\nether.web.log'"
@@ -61,8 +63,9 @@ function RenameWithRetry($filename, $newfilename) {
         } 
         catch {
             Write-Host "Rename failed... retrying"
-         }
+        }
         Start-Sleep -Seconds 1
+        $count += 1
     }
     Write-Host "Rename faild!"
     exit -100
@@ -88,6 +91,7 @@ RenameWithRetry "$netherRoot\nether.web.log" "$netherRoot\nether.web-inmemory.lo
 Push-AppveyorArtifact "$netherRoot\nether.web-inmemory.log" -FileName nether.web-inmemory.txt
 
 if ($status -ne 0) {
+    Write-Host "Exiting with status $status"
     exit $status
 }
 
@@ -103,5 +107,6 @@ RenameWithRetry "$netherRoot\nether.web.log" "$netherRoot\nether.web-sql.log"
 Push-AppveyorArtifact "$netherRoot\nether.web-sql.log" -FileName nether.web-sql.txt
 
 if ($status -ne 0) {
+    Write-Host "Exiting with status $status"
     exit $status
 }
