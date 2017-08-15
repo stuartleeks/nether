@@ -82,7 +82,7 @@ namespace Nether.Web.Features.PlayerManagement
                 if (player.Gamertag != null)
                 {
                     // check if gamertag is already in use
-                    var existingPlayerForGamertag = await _store.GetPlayerDetailsByUserIdAsync(player.Gamertag);
+                    var existingPlayerForGamertag = await _store.GetPlayerDetailsByGamertagAsync(player.Gamertag);
                     if (existingPlayerForGamertag != null && existingPlayerForGamertag.UserId != userId)
                     {
                         // Can't use a gamertag from another user
