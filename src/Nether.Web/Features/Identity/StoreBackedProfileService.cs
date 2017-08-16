@@ -43,7 +43,8 @@ namespace Nether.Web.Features.Identity
             var user = await _userStore.GetUserByIdAsync(context.Subject.GetSubjectId());
 
             context.IssuedClaims.Add(new Claim(JwtClaimTypes.Subject, user.UserId));
-            context.AddFilteredClaims(await _userClaimsProvider.GetUserClaimsAsync(user));
+            var requestedUserClaims = context.FilterClaims(await _userClaimsProvider.GetUserClaimsAsync(user));
+            context.IssuedClaims.AddRange(requestedUserClaims);
         }
 
         public async Task IsActiveAsync(IsActiveContext context)

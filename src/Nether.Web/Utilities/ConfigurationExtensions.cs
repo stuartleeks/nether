@@ -18,21 +18,23 @@ namespace Nether.Web.Utilities
         /// </summary>
         /// <param name="configSection"></param>
         /// <returns></returns>
-        public static IEnumerable<string> ParseStringArray(this IConfigurationSection configSection)
+        public static ICollection<string> ParseStringArray(this IConfigurationSection configSection)
         {
             if (configSection.Value == null)
             {
                 // when the config is specified using JSON it can come as child config elements
                 // if specified in an arry
                 return configSection.GetChildren()
-                    .Select(v => v.Value);
+                    .Select(v => v.Value)
+                    .ToArray();
             }
             else
             {
                 // when specified via environment variables it comes in as a comma-delimited string
                 return configSection.Value
                     .Split(',')
-                    .Select(s => s.Trim());
+                    .Select(s => s.Trim())
+                    .ToArray();
             }
         }
         /// <summary>
@@ -43,7 +45,7 @@ namespace Nether.Web.Utilities
         /// <param name="configSection"></param>
         /// <param name="key">The key for the child section</param>
         /// <returns></returns>
-        public static IEnumerable<string> ParseStringArray(this IConfigurationSection configSection, string key)
+        public static ICollection<string> ParseStringArray(this IConfigurationSection configSection, string key)
         {
             return configSection
                 .GetSection(key)

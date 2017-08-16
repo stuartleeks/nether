@@ -11,7 +11,6 @@ using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Http;
 using System;
-using Microsoft.AspNetCore.Http.Authentication;
 using System.Linq;
 using System.Security.Claims;
 using IdentityModel;
@@ -23,6 +22,8 @@ using Nether.Common.ApplicationPerformanceMonitoring;
 
 namespace Nether.Web.Features.IdentityUi
 {
+#warning TODO - need to reinstate AccountController ;-)
+#if false
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local and external accounts.
     /// The login service encapsulates the interactions with the user data store. This data store is in-memory only and cannot be used for production!
@@ -85,7 +86,7 @@ namespace Nether.Web.Features.IdentityUi
         public async Task<IActionResult> Login(string returnUrl)
         {
             // clear external cookie in case it's left lingering, otherwise we get AccessDenied redirect: https://github.com/aspnet/Templates/issues/686
-            await HttpContext.Authentication.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
+            await HttpContext.SignOutAsync(IdentityServerConstants.ExternalCookieAuthenticationScheme);
 
             var vm = await _account.BuildLoginViewModelAsync(returnUrl);
 
@@ -127,7 +128,7 @@ namespace Nether.Web.Features.IdentityUi
                     // issue authentication cookie with subject ID and username
                     var user = await _userStore.GetUserByLoginAsync(LoginProvider.UserNamePassword, model.Username);
                     var userId = user.UserId;
-                    await HttpContext.Authentication.SignInAsync(userId, model.Username, props);
+                    await HttpContext.SignInAsync(userId, model.Username, props);
                     _appMonitor.LogEvent("LoginSucceeded", properties: new Dictionary<string, string> {
                         { "LoginType", "interactive" },
                         { "LoginSubType", "local" }
@@ -181,7 +182,7 @@ namespace Nether.Web.Features.IdentityUi
                 try
                 {
                     // hack: try/catch to handle social providers that throw
-                    await HttpContext.Authentication.SignOutAsync(vm.ExternalAuthenticationScheme,
+                    await HttpContext.SignOutAsync(vm.ExternalAuthenticationScheme,
                         new AuthenticationProperties { RedirectUri = url });
                 }
                 catch (NotSupportedException) // this is for the external providers that don't have signout
@@ -193,7 +194,7 @@ namespace Nether.Web.Features.IdentityUi
             }
 
             // delete local authentication cookie
-            await HttpContext.Authentication.SignOutAsync();
+            await HttpContext.SignOutAsync();
 
             return View("LoggedOut", vm);
         }
@@ -334,7 +335,7 @@ namespace Nether.Web.Features.IdentityUi
 
             return await SwitchToNetherAuthAndRedirectAsync(model.ReturnUrl, info, claims, providerType, user, model.Gamertag);
         }
-        private async Task<IActionResult> SwitchToNetherAuthAndRedirectAsync(string returnUrl, AuthenticateInfo info, List<Claim> claims, string providerType, User user, string gamertag)
+        private async Task<IActionResult> SwitchToNetherAuthAndRedirectAsync(string returnUrl, Microsoft.AspNetCore.Http.Authentication.AuthenticateInfo info, List<Claim> claims, string providerType, User user, string gamertag)
         {
             var additionalClaims = new List<Claim>();
 
@@ -345,12 +346,15 @@ namespace Nether.Web.Features.IdentityUi
                 additionalClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
             }
 
+            //var newProps = new AuthenticationProperties(info.Properties.Items);
+            //newProps.GetTokenValue("id_token");
+
             // if the external provider issued an id_token, we'll keep it for signout
             AuthenticationProperties props = null;
             var id_token = info.Properties.GetTokenValue("id_token");
             if (id_token != null)
             {
-                props = new AuthenticationProperties();
+                props = new Microsoft.AspNetCore.Authentication.AuthenticationProperties();
                 props.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = id_token } });
             }
 
@@ -386,4 +390,5 @@ namespace Nether.Web.Features.IdentityUi
             return userIdClaim;
         }
     }
+#endif
 }
